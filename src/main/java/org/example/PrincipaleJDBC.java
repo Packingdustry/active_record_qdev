@@ -25,17 +25,8 @@ public class PrincipaleJDBC {
         String dbName = "testpersonne";
 
         try {
-            // chargement du driver jdbc
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connect = DBConnection.getConnection();
 
-            // creation de la connection
-            Properties connectionProps = new Properties();
-            connectionProps.put("user", userName);
-            connectionProps.put("password", password);
-            String urlDB = "jdbc:mysql://" + serverName + ":";
-            urlDB += portNumber + "/" + dbName;
-            System.out.println(urlDB);
-            Connection connect = DriverManager.getConnection(urlDB, connectionProps);
             //Connection connect = DriverManager.getConnection("jdbc:mysql://db4free.net/testpersonne","scruzlara", "root2014");
             // creation de la table Personne
             String createString = "CREATE TABLE Personne ( "
