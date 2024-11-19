@@ -6,25 +6,30 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
-    static String urlDB, user, password;
+    static String nomDB, urlDB, user, password;
     static Connection connection;
 
-    private DBConnection() throws SQLException, ClassNotFoundException {
+    private DBConnection(String nomBase) throws SQLException, ClassNotFoundException {
         // chargement du driver jdbc
         Class.forName("com.mysql.cj.jdbc.Driver");
-        this.urlDB = "jdbc:mysql://localhost:1911/testpersonne";
-        this.user = "root";
-        this.password = "";
+        urlDB = "jdbc:mysql://localhost:1911/" + nomDB;
+        user = "root";
+        password = "";
+        nomDB = nomBase;
         Properties connectionProps = new Properties();
         connectionProps.put("user", user);
         connectionProps.put("password", password);
         connection = DriverManager.getConnection(urlDB, connectionProps);
     }
 
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+    public static Connection getConnection(String nomDB) throws SQLException, ClassNotFoundException {
         if (connection == null) {
-            new DBConnection();
+            new DBConnection(nomDB);
         }
         return connection;
+    }
+
+    public static void setNomDB(String nomDB) throws SQLException, ClassNotFoundException {
+        new DBConnection(nomDB);
     }
 }
