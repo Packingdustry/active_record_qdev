@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
-    static String nomDB, urlDB, user, password;
-    static Connection connection;
+    private static String nomDB, urlDB, user, password;
+    private static Connection connection;
 
     private DBConnection(String nomBase) throws SQLException, ClassNotFoundException {
         // chargement du driver jdbc

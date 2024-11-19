@@ -25,7 +25,7 @@ public class PrincipaleJDBC {
         String dbName = "testpersonne";
 
         try {
-            Connection connect = DBConnection.getConnection();
+            Connection connect = DBConnection.getConnection(dbName);
 
             //Connection connect = DriverManager.getConnection("jdbc:mysql://db4free.net/testpersonne","scruzlara", "root2014");
             // creation de la table Personne
