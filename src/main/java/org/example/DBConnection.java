@@ -11,7 +11,7 @@ public class DBConnection {
     private String serverName = "localhost";
     private String portNumber = "1911";
     private String tableName = "personne";
-    private static String dbName = "testPersonne";
+    private static String dbName = "testpersonne";
     private static Connection instance;
 
     private DBConnection() throws SQLException, ClassNotFoundException {
@@ -23,7 +23,7 @@ public class DBConnection {
         instance = DriverManager.getConnection(urlDB, connectionProps);
     }
 
-    public static Connection getConnection(String nomDB) throws SQLException, ClassNotFoundException {
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
         if (instance == null) {
             try {
                 new DBConnection();

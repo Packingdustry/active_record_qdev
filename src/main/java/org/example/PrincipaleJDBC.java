@@ -1,12 +1,10 @@
 package org.example;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 public class PrincipaleJDBC {
 
@@ -25,7 +23,7 @@ public class PrincipaleJDBC {
         String dbName = "testpersonne";
 
         try {
-            Connection connect = DBConnection.getConnection(dbName);
+            Connection connect = DBConnection.getConnection();
 
             //Connection connect = DriverManager.getConnection("jdbc:mysql://db4free.net/testpersonne","scruzlara", "root2014");
             // creation de la table Personne
