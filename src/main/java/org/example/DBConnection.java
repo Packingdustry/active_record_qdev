@@ -6,30 +6,38 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
-    private static String nomDB, urlDB, user, password;
-    private static Connection connection;
+    private String userName = "root";
+    private String password = "";
+    private String serverName = "localhost";
+    private String portNumber = "1911";
+    private String tableName = "personne";
+    private static String dbName = "testPersonne";
+    private static Connection instance;
 
-    private DBConnection(String nomBase) throws SQLException, ClassNotFoundException {
-        // chargement du driver jdbc
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        urlDB = "jdbc:mysql://localhost:1911/" + nomDB;
-        user = "root";
-        password = "";
-        nomDB = nomBase;
+    private DBConnection() throws SQLException, ClassNotFoundException {
         Properties connectionProps = new Properties();
-        connectionProps.put("user", user);
+        connectionProps.put("user", userName);
         connectionProps.put("password", password);
-        connection = DriverManager.getConnection(urlDB, connectionProps);
+        String urlDB = "jdbc:mysql://" + serverName + ":";
+        urlDB += portNumber + "/" + dbName;
+        instance = DriverManager.getConnection(urlDB, connectionProps);
     }
 
     public static Connection getConnection(String nomDB) throws SQLException, ClassNotFoundException {
-        if (connection == null) {
-            new DBConnection(nomDB);
+        if (instance == null) {
+            try {
+                new DBConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return connection;
+        return instance;
     }
 
     public static void setNomDB(String nomDB) throws SQLException, ClassNotFoundException {
-        new DBConnection(nomDB);
+        if (nomDB != null && nomDB != dbName) {
+            dbName = nomDB;
+            instance = null;
+        }
     }
 }
