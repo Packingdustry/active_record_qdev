@@ -22,9 +22,9 @@ public class Personne {
         Connection connect = DBConnection.getConnection();
 
         String SQLPrep = "SELECT * FROM personne;";
-        PreparedStatement prep1 = connect.prepareStatement(SQLPrep);
-        prep1.execute();
-        ResultSet rs = prep1.getResultSet();
+        PreparedStatement prep = connect.prepareStatement(SQLPrep);
+        prep.execute();
+        ResultSet rs = prep.getResultSet();
         ArrayList<Personne> personnes = new ArrayList<>();
         while (rs.next()) {
             int id = rs.getInt("id");
@@ -35,6 +35,24 @@ public class Personne {
             personnes.add(p);
         }
         return personnes;
+    }
+
+    public static Personne findById(int id) throws ClassNotFoundException, SQLException {
+        Connection connect = DBConnection.getConnection();
+
+        String SQLPrep = "SELECT nom, prenom FROM personne WHERE id = ?;";
+        PreparedStatement prep = connect.prepareStatement(SQLPrep);
+        prep.setInt(1, id);
+        prep.execute();
+        ResultSet rs = prep.getResultSet();
+        Personne personne = null;
+        while (rs.next()) {
+            String nom = rs.getString("nom");
+            String prenom = rs.getString("prenom");
+            personne = new Personne(nom, prenom);
+            personne.setId(id);
+        }
+        return personne;
     }
 
     public String toString() {
